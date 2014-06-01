@@ -143,12 +143,12 @@ function setMagazineEdition(magazine){
         }
       }); 
 }
-function setClientContactsSelect(client, tab){
+function setClientContactsSelect(client, contact){
     $.ajax({
       type: "POST",
       url: "/avefenix/basic/public/status/contacts/"+client 
     })
-      .done(function( contacts ) {
+      .done(contact ,function( contacts ) {
         if(contacts[0]){  
             $('#form-edit-status :input[name=id_contact]') 
             .html($("<option></option>")
@@ -159,9 +159,9 @@ function setClientContactsSelect(client, tab){
                     .append($("<option></option>")
                     .attr("value",value['id'])
                     .text(value['firstname']+' '+value['lastname'])); 
-            });   
-            $('#form-edit-status :input[name=id_contact]').val( $('#'+tab+' :input[name=id_contact]').val() );
+            });    
         }
+      $('#form-edit-status :input[name=id_contact]').val( contact );  
       }); 
 }
 

@@ -22,7 +22,7 @@ Class Status extends Eloquent{
 		'time'=>'required',
 	    'id_user'=>'required|exists:users,id',
 	    'id_contact'=>'required|exists:contact,id',
-	    'id_client'=>'exists:client,id',
+	    'id_client'=>'required|exists:client,id',
 	    'id_subclient'=>'exists:subclient,id'
 	);
 

@@ -119,23 +119,31 @@ $(function(){
 			setFilterData();
 			setLocation();  
 		}
+		var actualClient;
+		var actualSatutus;
 		$(".editStatus").on('click', function(){ 
 			var tab = this.href.split("#");  
-			$('#form-edit-status :input[name=id_status]').val( $('#'+tab[1]+' :input[name=id_status]').val() ); 
-			setClientContactsSelect($('#'+tab[1]+' :input[name=id_client]').val(), tab[1]);
-			$('#form-edit-status :input[name=status]').val( $('#'+tab[1]+' :input[name=status]').val() );
-			$('#form-edit-status :input[name=edition]').val( $('#'+tab[1]+' :input[name=edition]').val() );
-			$('#form-edit-status :input[name=magazine]').val( $('#'+tab[1]+' :input[name=magazine]').val() );
-			$('#form-edit-status :input[name=comments]').val( $('#'+tab[1]+' :input[name=comments]').val() );
-			$('#form-edit-status :input[name=id_user]').val( $('#'+tab[1]+' :input[name=id_user]').val() );
-			$('#form-edit-status :input[name=id_client]').val( $('#'+tab[1]+' :input[name=id_client]').val() );
-			$('#form-edit-status :input[name=date]').datepicker('update', $('#'+tab[1]+' :input[name=date]').val() );  
-			$('#form-edit-status :input[name=time]').val( $('#'+tab[1]+' :input[name=time]').val() ); 
-			$('#form-edit-status :radio[name=color] ').filter( '[value='+$('#'+tab[1]+' :input[name=color]').val()+']' ).prop('checked', true);
+			actualSatutus = tab[1];
+			localStorage.setItem('actualSatutus', actualSatutus);
+			$('#form-edit-status :input[name=id_status]').val( $('#'+actualSatutus+' :input[name=id_status]').val() ); 
+			$('#form-edit-status :input[name=status]').val( $('#'+actualSatutus+' :input[name=status]').val() );
+			$('#form-edit-status :input[name=edition]').val( $('#'+actualSatutus+' :input[name=edition]').val() );
+			$('#form-edit-status :input[name=magazine]').val( $('#'+actualSatutus+' :input[name=magazine]').val() );
+			$('#form-edit-status :input[name=comments]').val( $('#'+actualSatutus+' :input[name=comments]').val() );
+			$('#form-edit-status :input[name=id_user]').val( $('#'+actualSatutus+' :input[name=id_user]').val() );
+			$('#form-edit-status :input[name=id_client]').val( $('#'+actualSatutus+' :input[name=id_client]').val() );
+			actualClient = $('#'+actualSatutus+' :input[name=id_client]').val(); 
+			localStorage.setItem('actualClient', actualClient); 
+			$('#form-edit-status :input[name=date]').datepicker('update', $('#'+actualSatutus+' :input[name=date]').val() );  
+			$('#form-edit-status :input[name=time]').val( $('#'+actualSatutus+' :input[name=time]').val() ); 
+			$('#form-edit-status :radio[name=color] ').filter( '[value='+$('#'+actualSatutus+' :input[name=color]').val()+']' ).prop('checked', true);
+			console.log("click "+actualSatutus);
 		}); 
-	    $('#formStatusEdit').on('shown.bs.modal', function() {  
-	    	var tab = 'edit'+$('#form-edit-status :input[name=id_status]').val(); 
-			setClientContactsSelect($('#'+tab+' :input[name=id_client]').val(), tab);
+	    $('#formStatusEdit').on('shown.bs.modal', function() { 
+	    	actualClient = localStorage.getItem('actualClient');
+	    	actualSatutus = localStorage.getItem('actualSatutus');
+			console.log("modal "+actualClient+"  "+actualSatutus);
+			setClientContactsSelect(actualClient, $('#'+actualSatutus+' :input[name=id_contact]').val()); 
 	    })
 	}
 	if($("section#users").length){ 

@@ -13,7 +13,7 @@
         <!-- Place favicon.ico and apple-touch-icon.png in the root directory --> 
 
         {{ HTML::style('css/normalize.css', array('media' => 'screen')) }}
-        {{ HTML::style('css/main.css?v=1', array('media' => 'screen')) }}
+        {{ HTML::style('css/main.css?v=2', array('media' => 'screen')) }}
         <!-- Bootstrap -->
         {{ HTML::style('assets/css/bootstrap.min.css', array('media' => 'screen')) }}   
         {{ HTML::style('assets/css/datepicker.css', array('media' => 'screen')) }}    
@@ -55,8 +55,8 @@
         {{ HTML::script('assets/js/locales/bootstrap-datepicker.es.js') }}  
         <!-- bootstrap-timepicker --> 
         {{ HTML::script('assets/js/bootstrap-timepicker.min.js') }}    
-        {{ HTML::script('js/plugins.js?v=1') }}
-        {{ HTML::script('js/main.js?v=1') }} 
+        {{ HTML::script('js/plugins.js?v=2') }}
+        {{ HTML::script('js/main.js?v=2') }} 
 
         <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
         <script>
