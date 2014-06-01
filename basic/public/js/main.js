@@ -40,6 +40,7 @@ $(function(){
 
 	}
 	if($("section#status").length){  
+
 		$.fn.datepicker.defaults.language = "es";
 		$.fn.datepicker.defaults.format = "dd-mm-yyyy";
 		$('.input-append.date').datepicker({ 
@@ -57,7 +58,7 @@ $(function(){
             showMeridian: false
         }); 
 		getUrlVal();
-	 	setMagazineEdition($('select[name=magazines]').val());  
+	 	setMagazineEdition($('select[name=magazines]').val()); 
 		$(".input-append.date.filter").datepicker().on("changeDate", function(e){ 
 			input = $(e['target']).attr("name"); 
 			fecha = pad(e['date'].getDate())+'-'+pad(e['date'].getMonth()+1)+'-'+e['date'].getFullYear();
@@ -69,12 +70,13 @@ $(function(){
 			client = $('select[name=clients]').val();  
 			executive = $('select[name=executive]').val(); 
 			color = $('select[name=color]').val();  
+			search = $('input[name=search]').val(); 
 			if(input == 'date-ini')
 				($('input[name=date-end]').val())?alldate='&date-ini='+fecha+'&date-end='+dateEnd:alldate='&date-ini='+fecha+'&date-end='+today; 
 			else
 				($('input[name=date-ini]').val())?alldate='&date-ini='+dateIni+'&date-end='+fecha:alldate='&date-ini='+today+'&date-end='+fecha;
 			path = '?sort='+sort+alldate;
-			console.log(alldate);
+			//console.log(alldate);
 			($('select[name=magazines]').val())?path+='&magazines='+revista:path; 
     		(typeof(edition) != "undefined" && typeof(edition) != "object" && edition != 0)?path+='&edition='+edition:path;  
 		    (client && client!=0)?path+='&client='+client:path; 
@@ -89,13 +91,52 @@ $(function(){
 			client = $('select[name=clients]').val();  
 			executive = $('select[name=executive]').val(); 
 			color = $('select[name=color]').val(); 
+			search = $('input[name=search]').val(); 
 			if(editionRow.length >= 0 && editionRow!=0) 
 				edition = editionRow;	 	
 			if($(this).attr('name')=='magazines')
 				edition = 0; 
 			setFilterData();	 
 			setLocation();  
-		});   		
+		});   
+		$(document).keypress(function(e) {
+		    if(e.which == 13) {
+	 			setVariables();
+		    }
+		});
+		$("#send-search").on('click', function(){  
+			setVariables(); 
+		});	
+		function setVariables(){ 
+			datesStart();  
+			sort = $("select[name=sort]").val();    
+			revista = $('select[name=magazines]').val();  
+			editionRow = $('select[name=editions]').val(); 
+			client = $('select[name=clients]').val();  
+			executive = $('select[name=executive]').val(); 
+			color = $('select[name=color]').val();  
+			search = $('input[name=search]').val();  
+			setFilterData();
+			setLocation();  
+		}
+		$(".editStatus").on('click', function(){ 
+			var tab = this.href.split("#");  
+			$('#form-edit-status :input[name=id_status]').val( $('#'+tab[1]+' :input[name=id_status]').val() ); 
+			setClientContactsSelect($('#'+tab[1]+' :input[name=id_client]').val(), tab[1]);
+			$('#form-edit-status :input[name=status]').val( $('#'+tab[1]+' :input[name=status]').val() );
+			$('#form-edit-status :input[name=edition]').val( $('#'+tab[1]+' :input[name=edition]').val() );
+			$('#form-edit-status :input[name=magazine]').val( $('#'+tab[1]+' :input[name=magazine]').val() );
+			$('#form-edit-status :input[name=comments]').val( $('#'+tab[1]+' :input[name=comments]').val() );
+			$('#form-edit-status :input[name=id_user]').val( $('#'+tab[1]+' :input[name=id_user]').val() );
+			$('#form-edit-status :input[name=id_client]').val( $('#'+tab[1]+' :input[name=id_client]').val() );
+			$('#form-edit-status :input[name=date]').datepicker('update', $('#'+tab[1]+' :input[name=date]').val() );  
+			$('#form-edit-status :input[name=time]').val( $('#'+tab[1]+' :input[name=time]').val() ); 
+			$('#form-edit-status :radio[name=color] ').filter( '[value='+$('#'+tab[1]+' :input[name=color]').val()+']' ).prop('checked', true);
+		}); 
+	    $('#formStatusEdit').on('shown.bs.modal', function() {  
+	    	var tab = 'edit'+$('#form-edit-status :input[name=id_status]').val(); 
+			setClientContactsSelect($('#'+tab+' :input[name=id_client]').val(), tab);
+	    })
 	}
 	if($("section#users").length){ 
 			 
@@ -110,7 +151,7 @@ $(function(){
   		todayHighlight: true
 	}); 
 
-	if( hash == '#formStatus' || hash == '#formContact' )
+	if( hash == '#formStatus' || hash == '#formContact' || hash == '#formStatusEdit' )
 		$(hash).modal('show');  
 	else if(hash == '#perfilEdit'){
 		$('#perfil').hide();

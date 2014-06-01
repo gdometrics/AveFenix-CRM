@@ -4,6 +4,8 @@
 
     <section id="status" class="page white">
 
+        @include('includes.formStatusEdit') 
+
         @include('includes.formStatus') 
 
         @include('includes.menu')
@@ -17,7 +19,14 @@
         @include('includes.alerts')  
 
         <article class="white"> 
-          <br />          
+        <div class="search"> 
+          <div class="input-group">
+            {{ Form::text('search', null, array('class'=>'form-control input-sm','name'=>'search')) }} 
+            <span class="input-group-btn">
+              <button id="send-search" class="btn btn-default input-sm" type="button"><i class="fa fa-search"></i></button>
+            </span>
+          </div>
+        </div>  
           <div class="orange nav-2">
             <div class="left row col-28">
               <table>
@@ -50,11 +59,14 @@
                   <td id="edition-input">  
                     {{ Form::select('editions', array(''=>''), null,array('class'=>'form-control input-sm hidden', 'id'=>'edition' )) }}  
                   </td>  
+                  <td>   
+                    {{ Form::select('color', ['0'=>'Estado','1'=>'Finalizado','2'=>'En Proceso','3'=>'Detenido'], null,array('class'=>'form-control input-sm', 'id'=>'Color' )) }}  
+                  </td> 
                 </tr>
               </table>   
             </div>
             <div class="right row col-22"> 
-              <table>
+              <table width="100%">
                 <tr>
                   <td>
                     <button type="button" class="btn btn-link" data-toggle="modal" data-target="#formStatus">

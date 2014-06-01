@@ -61,7 +61,8 @@ class UsersController extends BaseController {
 				$contactList = Contact::findUserContacts(Auth::user()->id); 
 				$contact = new Contact; 
 		   		$this->layout->content = View::make('pages.contacts', array('contacto' => $contact, 'contacts' => $contactList, 'clients' => $contact->clientList(Auth::user()->id) ));
-			} elseif($section == 'status'){   
+			} 
+			elseif($section == 'status'){   
 				$client = Client::findUserClient($val, Auth::user()->id); 
 				if(!$client) 
 	   				return Redirect::to('users/executive');  
@@ -72,16 +73,19 @@ class UsersController extends BaseController {
 				$edition = range(0,200); $edition [0] = 'Edición';
 				$stat = new Status; 
 	   			$this->layout->content = View::make('pages.status', array('estatus' => $stat, 'client' => $client, 'contacts' => $contacts, 'magazine' => $magazine, 'status' => $status, 'edition' => $edition));
-			}elseif($section == 'clients'){ 
+			}
+			elseif($section == 'clients'){ 
 				$clientsList = Client::findUserClients(Auth::user()->id);   
 	   			$this->layout->content = View::make('pages.executive', array('clients' => $clientsList ));
-			}else{   
+			}
+			else{   
 				$_GET['executive']=Auth::user()->id;
-				$status = Status::findStatus($_GET); 
+				$status = Status::findStatus($_GET);  
 				$clientsList = Client::findClientsList(Auth::user()->id); 
 				$magazine = Magazine::listMagazine();   
+				$edition = range(0,200); $edition [0] = 'Edición';
 				$stat = new Status; 
-	   			$this->layout->content = View::make('pages.statusExecutive', array('estatus' => $stat, 'magazine' => $magazine, 'status' => $status, 'clients' => $clientsList));
+	   			$this->layout->content = View::make('pages.statusExecutive', array('estatus' => $stat, 'magazine' => $magazine, 'status' => $status, 'clients' => $clientsList, 'edition' => $edition));
 			}
 
 		}else{
@@ -102,13 +106,14 @@ class UsersController extends BaseController {
 			} elseif ($section == 'users') {  
 				$users = User::all();
 		   		$this->layout->content = View::make('pages.users', array('users' => $users ));
-			} else{       
+			} else{      
 				$status = Status::findStatus($_GET);
 				$clientsList = Client::findClientsList(); 
 				$executive = new Client; 
 				$magazine = Magazine::listMagazine();
+				$edition = range(0,200); $edition [0] = 'Edición';
 				$stat = new Status; 
-		   		$this->layout->content = View::make('pages.statusManager', array('estatus' => $stat, 'status' => $status, 'magazine' => $magazine, 'clients' => $clientsList, 'executive' => $executive->executiveList()));
+		   		$this->layout->content = View::make('pages.statusManager', array('estatus' => $stat, 'status' => $status, 'magazine' => $magazine, 'edition' => $edition, 'clients' => $clientsList, 'executive' => $executive->executiveList()));
 			}
 		}else{
 			return Redirect::to('home')->with('message', 'Debes iniciar sesión para continuar.');		

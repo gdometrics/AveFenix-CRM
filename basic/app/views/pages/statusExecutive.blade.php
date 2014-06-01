@@ -4,6 +4,8 @@
 
     <section id="status" class="page white"> 
 
+        @include('includes.formStatusEdit') 
+
         @include('includes.menu')
         
         @include('includes.perfil') 
@@ -15,7 +17,14 @@
         @include('includes.alerts')  
 
         <article class="white"> 
-          <br />          
+        <div class="search"> 
+          <div class="input-group">
+            {{ Form::text('search', null, array('class'=>'form-control input-sm','name'=>'search')) }} 
+            <span class="input-group-btn">
+              <button id="send-search" class="btn btn-default input-sm" type="button"><i class="fa fa-search"></i></button>
+            </span>
+          </div>
+        </div>  
           <div class="orange nav-2">
             <div class="left row col-1"> 
               <table>
@@ -51,6 +60,9 @@
                   <td id="clients-input">  
                     {{ Form::select('clients', $clients, null,array('class'=>'form-control input-sm', 'id'=>'clients' )) }}  
                   </td>  
+                  <td>   
+                    {{ Form::select('color', ['0'=>'Estado','1'=>'Finalizado','2'=>'En Proceso','3'=>'Detenido'], null,array('class'=>'form-control input-sm', 'id'=>'Color' )) }}  
+                  </td> 
                 </tr>
               </table> 
             </div> 

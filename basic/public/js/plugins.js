@@ -75,12 +75,13 @@ function setFilterData(){
     else
         alldate = '';
     (alldate)?path='?sort='+sort+alldate:path='?sort='+sort;  
-    (revista)?path+='&magazine='+revista:path; 
+    (revista && revista!=0)?path+='&magazine='+revista:path; 
     (typeof(edition) != "undefined" && typeof(edition) != "object" && edition != 0)?path+='&edition='+edition:path;  
     (client && client!=0)?path+='&client='+client:path; 
     (executive && executive!=0)?path+='&executive='+executive:path; 
-    (color && color!=0)?path+='&color='+color:path; 
-}
+    (color && color!=0)?path+='&color='+color:path;  
+    (search && search!='')?path+='&search='+search:path; 
+} 
 function inputOpen(){
     if( $( "input:checked" ).val() ==1 ){
             $('#subclients').show('300');
@@ -139,6 +140,27 @@ function setMagazineEdition(magazine){
             });
             $('select[name=editions]').removeClass('hidden');
             getUrlValEdition();
+        }
+      }); 
+}
+function setClientContactsSelect(client, tab){
+    $.ajax({
+      type: "POST",
+      url: "/avefenix/basic/public/status/contacts/"+client 
+    })
+      .done(function( contacts ) {
+        if(contacts[0]){  
+            $('#form-edit-status :input[name=id_contact]') 
+            .html($("<option></option>")
+            .attr("value",'0')
+            .text('Contacto del cliente'));  
+            $.each(contacts, function(key, value) {    
+                $('#form-edit-status :input[name=id_contact]')
+                    .append($("<option></option>")
+                    .attr("value",value['id'])
+                    .text(value['firstname']+' '+value['lastname'])); 
+            });   
+            $('#form-edit-status :input[name=id_contact]').val( $('#'+tab+' :input[name=id_contact]').val() );
         }
       }); 
 }

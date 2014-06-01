@@ -18,9 +18,8 @@
         {{ HTML::style('assets/css/bootstrap.min.css', array('media' => 'screen')) }}   
         {{ HTML::style('assets/css/datepicker.css', array('media' => 'screen')) }}    
         {{ HTML::style('assets/css/bootstrap-timepicker.min.css', array('media' => 'screen')) }}  
-        {{ HTML::style('assets/css/font-awesome.min.css', array('media' => 'screen')) }} 
-        
- 
+        {{ HTML::style('assets/css/font-awesome.min.css', array('media' => 'screen')) }}  
+
         {{ HTML::script('js/vendor/modernizr-2.6.2.min.js') }} 
         <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!--[if lt IE 9]>
@@ -51,9 +50,11 @@
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
         <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.10.2.min.js"><\/script>')</script>
         {{ HTML::script('assets/js/bootstrap.min.js') }} 
+        <!-- bootstrap-datepicker --> 
         {{ HTML::script('assets/js/bootstrap-datepicker.js') }}  
         {{ HTML::script('assets/js/locales/bootstrap-datepicker.es.js') }}  
-        {{ HTML::script('assets/js/bootstrap-timepicker.min.js') }}  
+        <!-- bootstrap-timepicker --> 
+        {{ HTML::script('assets/js/bootstrap-timepicker.min.js') }}    
         {{ HTML::script('js/plugins.js?v=1') }}
         {{ HTML::script('js/main.js?v=1') }} 
 

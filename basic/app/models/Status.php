@@ -34,6 +34,24 @@ Class Status extends Eloquent{
 	public static function findClientStatus($id_client=null,$id_user=null){ 
 		return Status::where('id_client', '=', $id_client)->get(); 
 	}
+	public static function search() {
+
+	    //$q = Input::get('myInputField');
+
+	    $q = 'on en';
+
+	    $searchTerms = explode(' ', $q);
+
+	    $query = DB::table('status');
+
+	    foreach($searchTerms as $term)
+	    {
+	        $query->where('status', 'LIKE', '%'. $term .'%');
+	    } 
+	        //$query->where('status', 'LIKE', '%'. $q .'%');
+	    return $results = $query->get();
+
+	}
 	public static function findStatus($sort=null){ 
 		if($sort!=null){
 			if(isset($sort['sort']))   
@@ -50,10 +68,13 @@ Class Status extends Eloquent{
 			if(isset($sort['executive']))
 				$executive = $sort['executive'];	
 			if(isset($sort['color']))
-				$color = $sort['color']; 
+				$color = $sort['color']; 	
+			if(isset($sort['search']))
+				$search = $sort['search']; 
 		}
 		$query = 'SELECT * FROM status ';
 		$where = '';
+		// variable $where identifica que field uso el WHERE primero
 		if(isset($between)){
 			$query .= ' WHERE '.$between; 
 			$where = 'between';
@@ -69,6 +90,10 @@ Class Status extends Eloquent{
 		elseif(isset($color)){
 			$query .= ' WHERE color='.$color;
 			$where = 'color';
+		}		
+		elseif(isset($search)){
+			$query .= ' WHERE status LIKE "%'.$search.'%" OR comments LIKE "%'.$search.'%"';
+			$where = 'search';
 		}	
 		elseif(isset($id_magazine)){ 
 			if($id_magazine!=0){
@@ -78,6 +103,7 @@ Class Status extends Eloquent{
 				$where = 'magazine';
 			}
 		}  
+		// agrega un AND por cada field recibido
 		if(isset($id_magazine) && ($id_magazine!=0 && $where!='magazine')){
 			$query .= ' AND magazine='.$id_magazine; 	
 			if(isset($id_edition))
@@ -87,6 +113,10 @@ Class Status extends Eloquent{
 			$query .= ' AND id_client='.$client;
 		if(isset($executive)  && $where!='executive' )	
 			$query .= ' AND id_user='.$executive;	
+		if(isset($color)  && $where!='color' )	
+			$query .= ' AND color='.$color;		
+		if(isset($search)  && $where!='search' )	
+			$query .= ' AND status LIKE "%'.$search.'%" OR comments LIKE "%'.$search.'%"';	
 	 
 
 		if(isset($order))

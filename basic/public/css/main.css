@@ -475,10 +475,19 @@ background-repeat: no-repeat;
     border: 1 !important;
     width: 90px !important;
     box-shadow: 0 0 0 #fff !important;
+} 
+.search{
+    max-width: 1024px;
+    width: 100%;
+    margin: 0 auto;
 }
-select#color option[value="1"]   { background-image:url(../img/stripes1.png);   }
-select#color option[value="2"] { background-image:url(../img/stripes1.png); }
-select#color option[value="3"] { background-image:url(../img/stripes1.png); }
+.search div{
+    max-width: 300px;
+}
+.orange select.form-control{   
+   background: transparent; 
+   color: #fff;  
+} 
 /* ==========================================================================
    Helper classes
    ========================================================================== */

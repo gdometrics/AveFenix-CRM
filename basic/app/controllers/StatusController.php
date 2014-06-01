@@ -31,6 +31,24 @@ class StatusController extends BaseController {
 	       // validation has failed, display error messages 
 	   	   return Redirect::to(Input::get('url')."#formStatus")->with('message-box', 'Debes corregir los siguientes campos:')->withErrors($validator)->withInput();
 	   }
+	} 
+	public function postEdit(){
+	 	$validator = Validator::make(Input::all(), Status::$rules);
+
+	   	$data = Input::all();
+	    $status = Status::find(Input::get('id_status'));  
+	    if (is_null ($status)){ 
+			App::abort(404); 
+		}  
+	 	if ($validator->passes()) {
+		   $status->fill($data); 
+		   $status->date = date("Y-m-d", strtotime( Input::get('date'))); 
+		   $status->save(); 
+		   return Redirect::to(Input::get('url').'#'.$status->id)->with('confirmation', '¡Los datos fueron actualizados!');
+	 	} else {
+	       // validation has failed, display error messages   
+	   	   return Redirect::to(Input::get('url').'#formStatusEdit')->with('message-box', 'Debes corregir los siguientes campos:')->withErrors($validator)->withInput();
+	   	}
 	}
 	public function postEdition($id=null)
 	{
@@ -41,9 +59,9 @@ class StatusController extends BaseController {
 	 *
 	 * @return Response
 	 */
-	public function store()
-	{
-		//
+	public function postContacts($id=null)
+	{ 
+		return Contact::findClientContactsArray($id);
 	}
 
 	/**

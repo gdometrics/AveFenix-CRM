@@ -66,6 +66,9 @@ Class Contact extends Eloquent{
 		}  
 		return $contactRow;
 	}
+	public static function findClientContactsArray($id_client=null){ 
+		return Contact::where('id_client','=', $id_client)->get(array('id', 'firstname', 'lastname' ));  
+	}
 	public static function findUserContacts($id_user=null){  
 		$results = DB::select( DB::raw("SELECT contact.* FROM contact, client WHERE contact.id_client = client.id AND client.id_user = :id_user"), array('id_user' => $id_user,));
 		return (object) $results;
