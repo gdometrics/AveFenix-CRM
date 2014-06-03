@@ -57,7 +57,9 @@ function getUrlVal(){
     if(getURLParameter('executive') != 'null' )  
         $('select[name=executive]').val(getURLParameter('executive'));  
     if(getURLParameter('color') != 'null' )  
-        $('select[name=color]').val(getURLParameter('color'));  
+        $('select[name=color]').val(getURLParameter('color'));   
+    if(getURLParameter('search') != 'null' )  
+        $('input[name=search]').val(getURLParameter('search'));  
 } 
 function getUrlValEdition(){ 
     if(getURLParameter('edition') != 'null' )  

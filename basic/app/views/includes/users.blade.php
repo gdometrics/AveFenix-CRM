@@ -4,7 +4,12 @@
                 <div class="panel-heading">
                   <h4 class="panel-title">  
                     <div class="left row col-2 font-grey"> 
-                      <a data-toggle="collapse" data-parent="#accordion" href="#{{ $user->id }}">{{ $user->fullname() }}</a>
+                      <a data-toggle="collapse" data-parent="#accordion" href="#{{ $user->id }}">
+                        <table width="100%" >
+                          <tr>
+                            <td>{{ $user->fullname() }}</a></td>
+                          </tr>
+                        </table> 
                     </div>
                     <div class="right row col-2 font-grey"> 
                     <a data-toggle="collapse" data-parent="#accordion" href="#edit{{ $user->id }}"><i class="fa fa-pencil"></i></a>
@@ -36,7 +41,7 @@
                         </p>
                         <p class="data">Teléfono principal: {{ $user->phone1 }}</p> 
                         <p class="data">Teléfono secundario: {{ $user->phone2 }}</p> 
-                        <p class="data">Correo electrónico: {{ $user->email }}</p> 
+                        <p class="data">Correo electrónico: <a href="{{ 'mailto:'.$user->email }}">{{ $user->email }}</a></p> 
                       </div>   
 
                         {{ Form::hidden('url', URL::current()) }}
@@ -68,7 +73,7 @@
                         </p>
                         <p class="data">Teléfono principal: {{ $user->phone1 }}</p> 
                         <p class="data">Teléfono secundario: {{ $user->phone2 }}</p> 
-                        <p class="data">Correo electrónico: {{ $user->email }}</p> 
+                        <p class="data">Correo electrónico: <a href="{{ 'mailto:'.$user->email }}">{{ $user->email }}</a></p> 
                       </div>   
                   </div>
                 </div>

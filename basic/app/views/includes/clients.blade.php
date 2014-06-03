@@ -20,7 +20,13 @@
                 <div class="panel-heading">
                   <h4 class="panel-title">  
                     <div class="left row col-2 font-grey"> 
-                      <a data-toggle="collapse" data-parent="#accordion" href="#{{ $client->id }}">{{ $client->name }}</a>
+                      <a data-toggle="collapse" data-parent="#accordion" href="#{{ $client->id }}"> 
+                        <table width="100%" >
+                          <tr>
+                            <td>{{ $client->name }}</td>
+                          </tr>
+                        </table>  
+                      </a>
                     </div>
                     <div class="right row col-2 font-grey"> 
                     <a class="popup-add" href="#" class="btn btn-primary" data-toggle="popover" title="Agregar subcliente" ><i class="fa fa-plus-circle"></i></a>  
@@ -87,15 +93,15 @@
                         <p class="data">Razon social: {{ $client->razonsocial }}</p>
                         <p class="data">Rif: {{ $client->rif }}</p>
                         <p class="data">Rubro: {{ $client->business }}</p>
-                        <p class="data">Página web: {{ $client->webpage }}</p> 
+                        <p class="data">Página web: <a href="{{ 'http://'.$client->webpage }}" target="_new">{{ $client->webpage }}</a></p> 
                     </div>
                     <div class="box-client">  
                         <p class="data">Dirección principal: {{ $client->address1 }}</p>
                         <p class="data">Dirección secundaria: {{ $client->address2 }}</p>
                         <p class="data">Teléfono principal: {{ $client->phone1 }}</p>
                         <p class="data">Teléfono secundario: {{ $client->phone2 }}</p>
-                        <p class="data">Correo eléctronico: {{ $client->email }}</p>
-                        <p class="data">Responsable por el cliente: {{ $client->executiveName() }}</p> 
+                        <p class="data">Correo eléctronico: <a href="{{ 'mailto:'.$client->email }}">{{ $client->email }}</a></p>
+                        <p class="data">Responsable por el cliente: <a href="{{ url('users/'.Auth::user()->level().'/users#'.$client->id_user) }}">{{ $client->executiveName() }}</a></p> 
                     </div>
                     <div class="clear"></div><br />
                     @foreach($client->findChildClients($client->id) as $subclient)

@@ -4,7 +4,13 @@
                 <div class="panel-heading">
                   <h4 class="panel-title">   
                     <div class="left row col-2 font-grey"> 
-                      <a data-toggle="collapse" data-parent="#accordion" href="#{{ $contact->id }}">{{ $contact->firstname." ".$contact->lastname }}</a>
+                      <a data-toggle="collapse" data-parent="#accordion" href="#{{ $contact->id }}"> 
+                        <table width="100%" >
+                          <tr>
+                            <td>{{ $contact->firstname." ".$contact->lastname }}</td>
+                          </tr>
+                        </table>  
+                      </a>
                     </div>
                     <div class="right row col-2 font-grey"> 
                     <a data-toggle="collapse" data-parent="#accordion" href="#edit{{ $contact->id }}"><i class="fa fa-pencil"></i></a>
@@ -92,7 +98,7 @@
                         <p class="data">Nombre y apellido: {{ $contact->firstname." ".$contact->lastname }}</p>
                         <p class="data">Departamento: {{ $contact->department }}</p>
                         <p class="data">Cargo: {{ $contact->job }}</p> 
-                        <p class="data">Cliente: {{ $contacto->clientName($contact) }}</p>  
+                        <p class="data">Cliente: <a href="{{ url('users/'.Auth::user()->level().'/clients#'.$contact->id_client) }}">{{ $contacto->clientName($contact) }}</a></p>  
                     </div> 
                     <div class="perfil"> 
                         <p class="data">Cumpleaños: 
@@ -103,7 +109,7 @@
                         </p>
                         <p class="data">Teléfono 1: {{ $contact->phone1 }}</p>
                         <p class="data">Teléfono 2: {{ $contact->phone2 }}</p>
-                        <p class="data">Correo eléctronico: {{ $contact->email }}</p> 
+                        <p class="data">Correo eléctronico: <a href="{{ 'mailto:'.$contact->email }}">{{ $contact->email }}</a></p> 
                     </div>
                   </div>
                 </div>

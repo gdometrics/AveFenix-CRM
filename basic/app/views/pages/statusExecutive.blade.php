@@ -19,6 +19,9 @@
         <article class="white"> 
         <div class="search"> 
           <div class="input-group">
+            <span class="input-group-btn">
+              <button id="empty-search" class="btn btn-default input-sm" type="button"><i class="fa fa-times"></i></button>
+            </span>
             {{ Form::text('search', null, array('class'=>'form-control input-sm','name'=>'search')) }} 
             <span class="input-group-btn">
               <button id="send-search" class="btn btn-default input-sm" type="button"><i class="fa fa-search"></i></button>

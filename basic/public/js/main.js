@@ -119,6 +119,19 @@ $(function(){
 			setFilterData();
 			setLocation();  
 		}
+		$('#empty-search').on('click', function(){
+			$("input[name=search]").val('');
+			datesStart();  
+			sort = $("select[name=sort]").val();    
+			revista = $('select[name=magazines]').val();  
+			editionRow = $('select[name=editions]').val(); 
+			client = $('select[name=clients]').val();  
+			executive = $('select[name=executive]').val(); 
+			color = $('select[name=color]').val();  
+			search = $("input[name=search]").val();
+			setFilterData();
+			setLocation();  
+		});
 		var actualClient;
 		var actualSatutus;
 		$(".editStatus").on('click', function(){ 

@@ -48,7 +48,8 @@
                 <div id="{{ $stat->id }}" class="panel-collapse collapse">
                   <div class="panel-body"> 
                     <div class="box-client"> 
-                        <p class="data">Contacto: {{ $estatus->contactName($stat->id_contact) }}</p>
+                        <p class="data">Cliente: <a href="{{ url('users/'.Auth::user()->level().'/clients#'.$stat->id_client) }}">{{ $estatus->clientName($stat->id_client) }}</a></p>
+                        <p class="data">Contacto: <a href="{{ url('users/'.Auth::user()->level().'/contacts#'.$stat->id_contact) }}">{{ $estatus->contactName($stat->id_contact) }}</a></p>
                         <p class="data">Revista: {{ $estatus->magazineName($stat->magazine) }}</p>
                         <p class="data">Edición: {{ $stat->edition }}</p>
                         <p class="data">Comentarios: {{ $stat->comments }}</p>
@@ -58,7 +59,7 @@
                               echo utf8_encode(strftime("%A&nbsp;%d&nbsp;de&nbsp;%B&nbsp;de&nbsp;%Y",strtotime($stat->date)));  
                               ?> a las {{ date("G:i",strtotime($stat->time)) }}
                         </p>
-                        <p class="data">Autor: {{ $estatus->userName($stat->id_user) }}</p> 
+                        <p class="data">Autor: <a href="{{ url('users/'.Auth::user()->level().'/users#'.$stat->id_user) }}">{{ $estatus->userName($stat->id_user) }}</a></p> 
                     </div> 
                   </div>
                 </div>

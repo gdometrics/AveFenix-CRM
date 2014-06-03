@@ -86,7 +86,10 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
         return $this->hasMany('Client', 'id_user'); 
     } 
     public function level(){  
-    	return User::$level[$this->level];
+    	if($this->level == 1)
+    		return 'manager';
+    	else 
+    		return 'executive';
     }
     public function getRememberToken()
 	{

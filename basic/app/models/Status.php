@@ -91,10 +91,6 @@ Class Status extends Eloquent{
 			$query .= ' WHERE color='.$color;
 			$where = 'color';
 		}		
-		elseif(isset($search)){
-			$query .= ' WHERE status LIKE "%'.$search.'%" OR comments LIKE "%'.$search.'%"';
-			$where = 'search';
-		}	
 		elseif(isset($id_magazine)){ 
 			if($id_magazine!=0){
 				$query .= ' WHERE magazine='.$id_magazine;	
@@ -103,6 +99,28 @@ Class Status extends Eloquent{
 				$where = 'magazine';
 			}
 		}  
+		elseif(isset($search)){
+			$query .= ' WHERE ( status LIKE "%'.$search.'%" OR comments LIKE "%'.$search.'%" OR edition LIKE "%'.$search.'%" ';
+			$where = 'search';
+			$that = new self;
+			if($searchUsers = $that->getSearch($search,'users')){ 
+				foreach ($searchUsers as $key) {
+					$query .= ' OR id_user LIKE "%'.$key->id.'%" '; 
+				}
+			}
+			if($searchContact = $that->getSearch($search,'contact')){ 
+				foreach ($searchContact as $key) {
+					$query .= ' OR id_contact LIKE "%'.$key->id.'%" '; 
+				}
+			}
+			if($searchClient = $that->getSearch($search,'client')){ 
+				foreach ($searchClient as $key) {
+					$query .= ' OR id_client LIKE "%'.$key->id.'%" '; 
+				}
+			}
+			$query .= ' ) ';
+		}	
+
 		// agrega un AND por cada field recibido
 		if(isset($id_magazine) && ($id_magazine!=0 && $where!='magazine')){
 			$query .= ' AND magazine='.$id_magazine; 	
@@ -115,15 +133,33 @@ Class Status extends Eloquent{
 			$query .= ' AND id_user='.$executive;	
 		if(isset($color)  && $where!='color' )	
 			$query .= ' AND color='.$color;		
-		if(isset($search)  && $where!='search' )	
-			$query .= ' AND status LIKE "%'.$search.'%" OR comments LIKE "%'.$search.'%"';	
+		if(isset($search)  && $where!='search' ){
+			$query .= ' AND ( status LIKE "%'.$search.'%" OR comments LIKE "%'.$search.'%" OR edition LIKE "%'.$search.'%" ';
+			$that = new self;
+			if($searchUsers = $that->getSearch($search,'users')){ 
+				foreach ($searchUsers as $key) {
+					$query .= ' OR id_user LIKE "%'.$key->id.'%" '; 
+				}
+			}
+			if($searchContact = $that->getSearch($search,'contact')){ 
+				foreach ($searchContact as $key) {
+					$query .= ' OR id_contact LIKE "%'.$key->id.'%" '; 
+				}
+			}
+			if($searchClient = $that->getSearch($search,'client')){ 
+				foreach ($searchClient as $key) {
+					$query .= ' OR id_client LIKE "%'.$key->id.'%" '; 
+				}
+			}
+			$query .= ' ) ';
+		}		
 	 
 
 		if(isset($order))
 			$query .= ' ORDER BY date '.$order.', time '.$order;  
 		else 
 			$query .= ' ORDER BY date DESC, time DESC';
-		$query;
+		//return $query;
 		return $results = DB::select( DB::raw($query));  
 	}
 	public function magazineName($id_magazine){
@@ -151,6 +187,13 @@ Class Status extends Eloquent{
 	    }   
 	    return $contactsRow;
     } 
+    public function getSearch($searchTerm,$searchTable){
+    	if($searchTable=='client')
+    		$query = 'SELECT id FROM '.$searchTable.' where name LIKE "%'.$searchTerm.'%" OR razonsocial LIKE "%'.$searchTerm.'%"';
+    	else	
+    		$query = 'SELECT id FROM '.$searchTable.' where firstname LIKE "%'.$searchTerm.'%" OR lastname LIKE "%'.$searchTerm.'%"';
+    	return $results = DB::select( DB::raw($query)); 
+    }
 }
 
 
