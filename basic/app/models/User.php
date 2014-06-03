@@ -91,6 +91,12 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
     	else 
     		return 'executive';
     }
+    public function level_es(){  
+    	if($this->level == 1)
+    		return 'Gerente';
+    	else 
+    		return 'Ejecutiva';
+    }
     public function getRememberToken()
 	{
 	    return $this->remember_token;

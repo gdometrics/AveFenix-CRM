@@ -61,7 +61,7 @@
                         <p class="font-orange">Información basica</p>
                         <p class="name data">Nombre y apellido: {{ $user->fullname() }}</p>
                         <p class="data">Cargo: {{ $user->job }}</p> 
-                        <p class="data">Nivel de usuario: {{ $user->level() }}</p> 
+                        <p class="data">Nivel de usuario: {{ $user->level_es() }}</p> 
                       </div>
                       <div class="perfil"> 
                         <p class="font-orange">&nbsp;</p>
