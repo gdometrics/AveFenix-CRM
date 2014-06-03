@@ -126,7 +126,21 @@ class UsersController extends BaseController {
 	   
 	   if ($validator->passes()) {
 	       $user = new User;  
+	 	   $oldFileName = $user->photo;
 		   $user->fill($data); 
+		   if (Input::hasFile('photo'))
+			{   
+			   // Get the image input
+   			   $file = Input::file('photo');
+   			   // Save image and crop it 
+   			   $photoName = Client::saveImg($file);
+   			   // Store photos name
+			   $user->photo = $photoName; 
+			}
+			else
+			{ 
+			   $user->photo = $oldFileName; 
+			}
 		   $user->password = Hash::make(Input::get('password')); 
 		   $user->birthdate = date("Y-m-d", strtotime( Input::get('birthdate')));
 		   $user->save();
@@ -136,7 +150,7 @@ class UsersController extends BaseController {
 	   	   return Redirect::to(Input::get('url'))->with('message', 'Debes corregir los siguientes campos:')->withErrors($validator)->withInput();
 	   }
 	}
-
+	// edit function for manager edit view
 	public function postEdit($id=null){
 	 	$validator = Validator::make(Input::all(), User::$rulesEdit);
 

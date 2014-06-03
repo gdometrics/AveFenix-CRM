@@ -12,15 +12,18 @@
             <br />
             <div class="title">Registro de perfil</div> 
             <br /> 
-            {{ Form::open(array('url'=>'users/create', 'class'=>'form-signup')) }} 
+            {{ Form::open(array('url'=>'users/create', 'files' => true, 'method' => 'post', 'class'=>'form-signup')) }} 
             <div class="register-form">
               
                 <div class="form-group">
                   {{ Form::text('firstname', null, array('class'=>'form-control', 'placeholder'=>'Nombre')) }}    
                 </div>              
                 <div class="form-group">
-               {{ Form::text('lastname', null, array('class'=>'form-control', 'placeholder'=>'Apellido')) }}    
+               {{ Form::text('lastname', null, array('class'=>'form-control', 'placeholder'=>'Apellido')) }}       
                 </div>              
+                <div class="form-group">
+                {{ Form::file('photo', array('class'=>'form-control', 'placeholder'=>'Imagen')) }} 
+                </div>
                 <div class="form-group">
                {{ Form::text('email', null, array('class'=>'form-control', 'placeholder'=>'Correo electrónico')) }}    
                 </div>              

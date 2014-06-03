@@ -10,7 +10,7 @@
 
         @include('includes.alerts-box') 
         
-          {{ Form::open(array('url'=>'clients/create', 'class'=>'form-signup')) }} 
+          {{ Form::open(array('url'=>'clients/create', 'files' => true, 'method' => 'post', 'class'=>'form-signup')) }} 
             <div class="register-form">
               
                 <div class="form-group">
@@ -18,7 +18,10 @@
                 </div>              
                 <div class="form-group">
                {{ Form::text('razonsocial', null, array('class'=>'form-control', 'placeholder'=>'Razon social')) }}    
-                </div>              
+                </div>                     
+                <div class="form-group">
+                {{ Form::file('photo', array('class'=>'form-control', 'placeholder'=>'Imagen')) }} 
+                </div>
                 <div class="form-group">
                {{ Form::text('business', null, array('class'=>'form-control', 'placeholder'=>'Rubro')) }}    
                 </div>              

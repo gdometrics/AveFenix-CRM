@@ -24,7 +24,21 @@ class ClientsController extends BaseController {
 	   if ($validator->passes()) {
 	       $client = new Client;
 	   	   $data = Input::all();
+	 	   $oldFileName = $client->photo;
 		   $client->fill($data); 
+		   if (Input::hasFile('photo'))
+			{   
+			   // Get the image input
+   			   $file = Input::file('photo');
+   			   // Save image and crop it 
+   			   $photoName = Client::saveImg($file);
+   			   // Store photos name
+			   $client->photo = $photoName; 
+			}
+			else
+			{ 
+			   $client->photo = $oldFileName; 
+			}
 		   $client->save(); 
 
 	   	   $count = 0;
