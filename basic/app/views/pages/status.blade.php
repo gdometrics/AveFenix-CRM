@@ -24,7 +24,7 @@
             <span class="input-group-btn">
               <button id="empty-search" class="btn btn-default input-sm" type="button"><i class="fa fa-times"></i></button>
             </span>
-            {{ Form::text('search', null, array('class'=>'form-control input-sm','name'=>'search')) }} 
+            {{ Form::text('search', null, array('class'=>'form-control input-sm','name'=>'search','placeholder'=>'Buscar')) }} 
             <span class="input-group-btn">
               <button id="send-search" class="btn btn-default input-sm" type="button"><i class="fa fa-search"></i></button>
             </span>
